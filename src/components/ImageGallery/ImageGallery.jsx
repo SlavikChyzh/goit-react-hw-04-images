@@ -14,27 +14,27 @@ const ImageGallery = ({ searchWorld }) => {
   const [isLoadMore, setIsLoadMore] = useState(false);
   const [isModal, setIsModal] = useState('');
 
-  const queryImages = () => {
-    setIsLoading(true);
-    setIsLoadMore(false);
-    getImages(searchWorld, page)
-      .then(response => {
-        if (response.length !== 0) {
-          setIsLoading(false);
-          setIsLoadMore(true);
-          setGallery([...gallery, ...response]);
-        } else if (response.length === 0) {
-          Report.failure('No more images to load', 'Okay');
-          setIsLoadMore(false);
-        }
-      })
-      .catch(error => {
-        console.log('error :>> ', error);
-      })
-      .finally(() => {
-        setIsLoading(false);
-      });
-  };
+  // const queryImages = () => {
+  //   setIsLoading(true);
+  //   setIsLoadMore(false);
+  //   getImages(searchWorld, page)
+  //     .then(response => {
+  //       if (response.length !== 0) {
+  //         setIsLoading(false);
+  //         setIsLoadMore(true);
+  //         setGallery([...gallery, ...response]);
+  //       } else if (response.length === 0) {
+  //         Report.failure('No more images to load', 'Okay');
+  //         setIsLoadMore(false);
+  //       }
+  //     })
+  //     .catch(error => {
+  //       console.log('error :>> ', error);
+  //     })
+  //     .finally(() => {
+  //       setIsLoading(false);
+  //     });
+  // };
 
   useEffect(() => {
     setGallery([]);
@@ -42,9 +42,27 @@ const ImageGallery = ({ searchWorld }) => {
 
   useEffect(() => {
     if (searchWorld !== '') {
-      queryImages();
+      setIsLoading(true);
+      setIsLoadMore(false);
+      getImages(searchWorld, page)
+        .then(response => {
+          if (response.length !== 0) {
+            setIsLoading(false);
+            setIsLoadMore(true);
+            setGallery([...gallery, ...response]);
+          } else if (response.length === 0) {
+            Report.failure('No more images to load', 'Okay');
+            setIsLoadMore(false);
+          }
+        })
+        .catch(error => {
+          console.log('error :>> ', error);
+        })
+        .finally(() => {
+          setIsLoading(false);
+        });
     }
-  }, [page, searchWorld, queryImages]);
+  }, [page, searchWorld]);
 
   const handleModal = largeImageURL => {
     setIsModal(largeImageURL);
