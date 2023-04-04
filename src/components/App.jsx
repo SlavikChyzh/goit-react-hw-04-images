@@ -1,22 +1,20 @@
-import { Component } from 'react';
 import { ImageGallery } from './ImageGallery/ImageGallery';
 import { Searchbar } from './Searchbar/Searchbar';
+import { useState } from 'react';
 
-export class App extends Component {
-  state = {
-    searchWorld: '',
+const App = () => {
+  const [searchWorld, setSearchWorld] = useState('');
+
+  const searchbarSubmit = world => {
+    setSearchWorld(world);
   };
 
-  searchbarSubmit = world => {
-    this.setState({ searchWorld: world });
-  };
+  return (
+    <>
+      <Searchbar onSubmit={searchbarSubmit} />
+      <ImageGallery searchWorld={searchWorld}></ImageGallery>
+    </>
+  );
+};
 
-  render() {
-    return (
-      <>
-        <Searchbar onSubmit={this.searchbarSubmit} />
-        <ImageGallery search={this.state.searchWorld}></ImageGallery>
-      </>
-    );
-  }
-}
+export { App };

@@ -10,6 +10,7 @@ const getImages = (searchValue, page = 1) => {
     .then(({ data }) => {
       return data.hits;
     });
+
   return response;
 };
 
