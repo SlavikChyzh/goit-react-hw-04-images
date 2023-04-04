@@ -11,15 +11,13 @@ const ImageGallery = ({ searchWorld }) => {
   const [page, setPage] = useState(1);
   const [gallery, setGallery] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
-  const [isListShow, setIsListShow] = useState(false);
   const [isLoadMore, setIsLoadMore] = useState(false);
   const [isModal, setIsModal] = useState('');
-  const [oldSearch, setOldSearch] = useState(searchWorld);
 
-  async function queryImages() {
+  const queryImages = () => {
     setIsLoading(true);
     setIsLoadMore(false);
-    await getImages(searchWorld, page)
+    getImages(searchWorld, page)
       .then(response => {
         if (response.length !== 0) {
           setIsLoading(false);
@@ -36,10 +34,9 @@ const ImageGallery = ({ searchWorld }) => {
       .finally(() => {
         setIsLoading(false);
       });
-  }
+  };
 
   useEffect(() => {
-    setOldSearch(searchWorld);
     setGallery([]);
   }, [searchWorld]);
 
